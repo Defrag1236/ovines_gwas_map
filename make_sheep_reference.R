@@ -97,9 +97,9 @@ chip_data_with_eaf_clear <- chip_data_with_eaf_clear[!grepl(pattern="DE",x= chip
 
 # save result
 
-setwd("/home/common/projects/ovine_selection/Results")
+setwd("/home/common/projects/ovine_selection/ovines_gwas_map")
 
-fwrite(chip_data_with_maf, "reference_for_sheeps(maf_for_17_romanovskaya_sheeps).txt", col.names=T, row.names=F, quote=F)
+fwrite(chip_data_with_eaf_clear, "reference_for_sheeps(eaf_for_17_romanovskaya_female_sheeps).txt", col.names=T, row.names=F, quote=F)
 
 
 
