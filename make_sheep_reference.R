@@ -68,38 +68,32 @@ for ( n in (1:17)) {
 
 # count maf 
 
-A1_alt <- matrix(ncol=17, nrow=nrow(chip_data))
-A2_alt <- matrix(ncol=17, nrow=nrow(chip_data))
+allele_count <- matrix(ncol=17, nrow=nrow(chip_data))
+
 
 for (n in (1:nrow(animal_id))) {
 
-	A1_count <- matrix(ncol=1, nrow=nrow(chip_data))
-	chip_data_A1_count <- cbind(chip_data, A1_count) 
-	chip_data_A1_count[chip_data_A1_count$A2 == romanovka_list[[n]]$A1, "A1_count"] <- 1  
-	A1_alt[,n] <- chip_data_A1_count$A1_count
+ A1_count <- rep(0, nrow(chip_data))
+ A1_count[chip_data[,"A2"]==romanovka_list[[n]]$A1]=1
+ 
+ A2_count <- rep(0, nrow(chip_data))
+ A2_count[chip_data[,"A2"]==romanovka_list[[n]]$A2]=1
 
-	A2_count <- matrix(ncol=1, nrow=nrow(chip_data))
-	chip_data_A2_count <- cbind(chip_data, A2_count) 
-	chip_data_A2_count[chip_data_A2_count$A2 == romanovka_list[[n]]$A2, "A2_count"] <- 1  
-	A2_alt[,n] <- chip_data_A2_count$A2_count
+ allele_count[,n] <- A1_count+A2_count
 
-	}
+}
 
+eaf <- apply(allele_count,MAR=1,mean)/2
 
-A1_alt[is.na(A1_alt)] <- 0
-A2_alt[is.na(A2_alt)] <- 0
-
-maf <- matrix(ncol=1, nrow=nrow(chip_data))
-
-for (n in (1:nrow(chip_data))) {
-
-	maf[n,1] <- sum(A1_alt[n,]+A2_alt[n,])/34
-
-	}
+chip_data_with_eaf <- cbind(chip_data, eaf)
 
 
-chip_data_with_maf <- cbind(chip_data, maf)
+# delete bad info
 
+
+chip_data_with_eaf_clear <- chip_data_with_eaf[!grepl(pattern=99,x= chip_data_with_eaf$chromosome),]
+chip_data_with_eaf_clear <- chip_data_with_eaf_clear[!grepl(pattern="IN",x= chip_data_with_eaf_clear$A1),]
+chip_data_with_eaf_clear <- chip_data_with_eaf_clear[!grepl(pattern="DE",x= chip_data_with_eaf_clear$A2),]
 
 # save result
 
