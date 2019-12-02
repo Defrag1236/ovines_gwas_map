@@ -22,9 +22,9 @@ library(stringr)
 
 alleles_chip <- str_split_fixed(chip_data[,3], "/", 2)
 
-chip_data <- cbind(chip_data[,4:6], alleles_chip)
+chip_data <- cbind(chip_data[,c(2, 4:6)], alleles_chip)
 
-colnames(chip_data)[4:5] <- c("A1", "A2")
+colnames(chip_data)[5:6] <- c("A1", "A2")
 
 ## make SNPs in order
 
@@ -99,7 +99,7 @@ chip_data_with_eaf_clear <- chip_data_with_eaf_clear[!grepl(pattern="DE",x= chip
 
 setwd("/home/common/projects/ovine_selection/ovines_gwas_map")
 
-fwrite(chip_data_with_eaf_clear, "reference_for_sheeps(eaf_for_17_romanovskaya_female_sheeps).txt", col.names=T, row.names=F, quote=F)
+fwrite(chip_data_with_eaf_clear, "reference_for_sheeps_with_eaf_for_17_romanovskaya_female_sheeps.txt", col.names=T, row.names=F, quote=F)
 
 
 
