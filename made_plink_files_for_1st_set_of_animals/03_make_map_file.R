@@ -20,4 +20,4 @@ setwd("/home/common/projects/ovine_selection/ovines_gwas_map/Data/plink_files")
 
 library (data.table)
 
-fwrite(map, "map_for_1st_48_sheeps.map", quote = FALSE, col.names = FALSE, row.names = FALSE, sep = "\t")
+fwrite(map, "plink_for_1st_48_sheeps.map", quote = FALSE, col.names = FALSE, row.names = FALSE, sep = "\t")
