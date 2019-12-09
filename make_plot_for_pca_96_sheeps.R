@@ -5,19 +5,20 @@
 setwd("/home/common/projects/ovine_selection/ovines_gwas_map/Data/plink_files")
 
 pca_eigenval <- read.table("pca_96_sheeps.eigenval", head=F, stringsAsFactors=F)
-pca_eigenvec <- read.table("pca_96_sheeps.eigenvec", head=F, stringsAsFactors=F)
+pca_eigenvec <- read.table("pca_96_sheeps_filtered.eigenvec", head=F, stringsAsFactors=F)
 
 setwd("/home/common/projects/ovine_selection/ovines_gwas_map/Data")
 
 breed_info <- read.csv("sex_for_1st_48_sheeps.csv", head=T, stringsAsFactors=F, sep=";", fileEncoding="latin1")
-
+breed_info[26,1] <- "FZ463"
 # make plot
 
 for_plot <- cbind(pca_eigenvec$V3, pca_eigenvec$V4, breed_info$breed)
-
+rownames(for_plot) <- pca_eigenvec$V2
 
 for_plot[c(1:48),3] <- "F1-Arg/Rom"
-for_plot[c(49:96),3] <- breed_info$breed
+for_plot[c(49:96),3] <- breed_info[match(rownames(for_plot)[49:96], breed_info$ID),3]
+
 
 setwd("/home/common/projects/ovine_selection/ovines_gwas_map")
 

@@ -36,7 +36,7 @@ to_match <- match(rownames(pedAB), match_matrix[,2])
 
 # make ped file
 
-ped <- cbind(ped6, pedAB)
+ped <- cbind(ped6[to_match,], pedAB)
 
 # save ped
 
