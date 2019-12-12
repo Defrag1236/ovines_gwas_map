@@ -71,12 +71,17 @@ for ( n in (1:18)) {
 	
 	}
 
+
+# compare snp lists
+
+
+
 # count maf 
 
 allele_count <- matrix(ncol=18, nrow=nrow(chip_data))
 
 
-for (n in (1:length(animal_id))) {
+for (n in (1:18)) {
 
  A1_count <- rep(0, nrow(chip_data))
  A1_count[chip_data[,"A2"]==romanovka_list[[n]]$A1]=1
@@ -88,13 +93,42 @@ for (n in (1:length(animal_id))) {
 
 }
 
-eaf <- apply(allele_count,MAR=1,mean)/2
+
+number_of_alleles <- matrix(ncol=18, nrow=nrow(chip_data))
+
+for (n in (1:18)) {
+
+	for (i in (1:nrow(chip_data))) {
+
+		a1_error <- grepl(x="-", pattern=romanovka_list[[n]][i,2])
+		a1_error[a1_error==TRUE]=1
+		a2_error <- grepl(x="-", pattern=romanovka_list[[n]][i,3])
+		a2_error[a2_error==TRUE]=1
+
+		number_of_alleles[i,n] <- 2-(a1_error+a2_error)
+
+		}
+	
+	print(paste("sample_", n, "_done", sep=""))
+
+	}
+
+
+n_alleles <- apply(number_of_alleles, MAR=1, sum)
+
+eaf <- c()
+
+for (n in (1:nrow(chip_data))) {
+
+	eaf[n] <- sum(allele_count[n,])/n_alleles[n]
+
+	}
+
 
 chip_data_with_eaf <- cbind(chip_data, eaf)
 
 
 # delete bad info
-
 
 chip_data_with_eaf_clear <- chip_data_with_eaf[!grepl(pattern=99,x= chip_data_with_eaf$chromosome),]
 chip_data_with_eaf_clear <- chip_data_with_eaf_clear[!grepl(pattern="IN",x= chip_data_with_eaf_clear$A1),]
@@ -104,7 +138,7 @@ chip_data_with_eaf_clear <- chip_data_with_eaf_clear[!grepl(pattern="DE",x= chip
 
 setwd("/home/common/projects/ovine_selection/ovines_gwas_map")
 
-fwrite(chip_data_with_eaf_clear, "reference_for_sheeps_with_eaf_for_17_romanovskaya_female_sheeps.txt", col.names=T, row.names=F, quote=F)
+fwrite(chip_data_with_eaf_clear, "reference_for_sheeps_with_eaf_for_18_romanovskaya_female_sheeps.txt", col.names=T, row.names=F, quote=F)
 
 
 

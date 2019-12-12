@@ -6,7 +6,7 @@ setwd("/home/common/projects/ovine_selection/ovines_gwas_map")
 
 library(data.table)
 
-reference <- fread("reference_for_sheeps_with_eaf_for_17_romanovskaya_female_sheeps.txt", head=T, stringsAsFactors=F)
+reference <- fread("reference_for_sheeps_with_eaf_for_18_romanovskaya_female_sheeps.txt", head=T, stringsAsFactors=F)
 
 # make alleles in lexicographical order
 
@@ -62,4 +62,4 @@ reference_order_clear <- reference_order[,-c(8:9)]
 
 setwd("/home/common/projects/ovine_selection/ovines_gwas_map")
 
-fwrite(reference_order_clear, "clear_reference_for_sheeps_with_eaf_for_a1_17_romanovskaya_female_sheeps.txt", col.names=T, row.names=F, quote=F)
+fwrite(reference_order_clear, "clear_reference_for_sheeps_with_eaf_for_a1_18_romanovskaya_female_sheeps.txt", col.names=T, row.names=F, quote=F)
