@@ -16,10 +16,6 @@ f1_kat_rom <- matrix(ncol=2, nrow=nrow(breed_info[grepl(pattern="F1- KAT/ROM", x
 f1_kat_rom[,1] <- 0
 f1_kat_rom[,2] <- breed_info[grepl(pattern="F1- KAT/ROM", x=breed_info$breed),1]
 
-f1_arg_rom <- matrix(ncol=2, nrow=nrow(breed_info[grepl(pattern="F1-Arg/Rom", x=breed_info$breed),]))
-f1_arg_rom[,1] <- 0
-f1_arg_rom[,2] <- breed_info[grepl(pattern="F1-Arg/Rom", x=breed_info$breed),1]
-
 katahdin <- matrix(ncol=2, nrow=nrow(breed_info[grepl(pattern="Katahdin", x=breed_info$breed),]))
 katahdin[,1] <- 0
 katahdin[,2] <- breed_info[grepl(pattern="Katahdin", x=breed_info$breed),1]
@@ -36,7 +32,6 @@ backcross[,2] <- seq(1:48)
 
 write.table(argali, "argali_id.txt", col.names=F, row.names=F, quote=F, sep="\t")
 write.table(f1_kat_rom, "f1_kat_rom_id.txt", col.names=F, row.names=F, quote=F, sep="\t")
-write.table(f1_arg_rom, "f1_arg_rom_id.txt", col.names=F, row.names=F, quote=F, sep="\t")
 write.table(katahdin, "katahdin_id.txt", col.names=F, row.names=F, quote=F, sep="\t")
 write.table(romanovka, "romanovka_id.txt", col.names=F, row.names=F, quote=F, sep="\t")
 write.table(backcross, "backcross_id.txt", col.names=F, row.names=F, quote=F, sep="\t")
