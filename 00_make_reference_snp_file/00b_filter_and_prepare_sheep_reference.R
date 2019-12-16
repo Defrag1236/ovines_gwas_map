@@ -20,7 +20,6 @@ reference_to_order <- rbind(reference[grepl(pattern="TA", x=reference$alleles),]
 
 reference_to_order <- reference_to_order[,c(1:4, 6,5,7:8)]
 colnames(reference_to_order)[5:6] <- c("A1", "A2")
-reference_to_order$eaf <- 1-reference_to_order$eaf
 reference_to_order$alleles <- paste(reference_to_order$A1, reference_to_order$A2, sep="")  
 
 reference_order <- reference[!(reference$rs %in% reference_to_order$rs),]
@@ -32,6 +31,8 @@ reference_order <- reference_order[order(reference_order$alleles),]
 
 # clear from duplicates
 
+## delete duplicated rs
+
 bad_rs <- reference_order[duplicated(reference_order$rs),]
 
 for (n in (1:nrow(bad_rs))) {
@@ -40,17 +41,22 @@ for (n in (1:nrow(bad_rs))) {
 
 	}
 
+## delete duplicated chr_pos
+
 chr_pos <- paste(reference_order$chromosome, reference_order$position, sep="_")
-reference_order <- cbind(reference_order, chr_pos)
+bad_chr_pos <- chr_pos[duplicated(chr_pos)]
 
-bad_chr_pos <- reference_order[duplicated(reference_order$chr_pos),]
+to_delete <- which(chr_pos %in% bad_chr_pos)
 
-for (n in (1:nrow(bad_rs))) {
+reference_order <- reference_order[-to_delete,]
 
-	reference_order <- reference_order[!grepl(pattern=paste(bad_chr_pos$rs[n]), x=reference_order$rs),]
+## delete duplicated SNP_name
 
-	}
+bad_snp_name <- reference_order[duplicated(reference_order$SNP_name),]
 
+to_delete <- which(reference_order$SNP_name %in% bad_snp_name)
+
+reference_order <- reference_order[-to_delete,]
 
 # delete x chromosme
 
