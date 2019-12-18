@@ -27,6 +27,8 @@ colnames(chip_data)[5:6] <- c("A1", "A2")
 all_sheeps_af <- all_sheeps_af[!(grepl(pattern="-", x=all_sheeps_af$A1)),]
 all_sheeps_af <- all_sheeps_af[!(grepl(pattern="-", x=all_sheeps_af$A2)),]
 all_sheeps_af <- all_sheeps_af[!(grepl(pattern="0", x=all_sheeps_af$A1)),]
+all_sheeps_af <- subset(all_sheeps_af, all_sheeps_af$CHR>=1, select=1:6)
+
 
 
 # compare plink and chip_data and cbind reference with maf
